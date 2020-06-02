@@ -1,28 +1,40 @@
 const express = require("express");
 
 const router = express.Router();
-
-const users = [
-  {
-    id: "1",
-    name: "lishu",
-  },
-  {
-    id: "2",
-    name: "tarun",
-  },
-  {
-    id: "3",
-    name: "guptas",
-  },
-];
+const mongoose = require("mongoose");
+const User = mongoose.model("User");
 
 router.get("/", (req, res) => {
-  res.send(users);
+  console.log("working started");
+  User.find().then((users) => {
+    console.log("working tiil now");
+    res.send(users);
+  });
 });
 
 router.post("/", (req, res) => {
-  res.send(req.body);
+  const { name, email, password } = req.body;
+  if (!email || !password || !name) {
+    return res.status(400).json({ error: "Please add all the fields " });
+  }
+  User.findOne({ email: email })
+    .then((savedUser) => {
+      if (savedUser) {
+        return res.sendStatus(400).json({ error: "Users already exists" });
+      }
+      const user = new User({ name, email, password });
+      user
+        .save()
+        .then((user) => {
+          res.json({ message: "Saved user sucessfully", data: user });
+        })
+        .catch((err) => {
+          console.log("error");
+        });
+    })
+    .then((err) => {
+      console.log(err);
+    });
 });
 
 router.get("/new", (req, res) => {
