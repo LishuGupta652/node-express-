@@ -1,0 +1,19 @@
+{
+  "name": "heroku_deploymen",
+  "version": "1.0.0",
+  "description": "yet another heroku me",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "lishu",
+    "gupta"
+  ],
+  "author": "lishu gupta",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.9.16"
+  }
+}
