@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/user", route);
 
 app.get("/", (req, res) => {
-  res.status(200).send("Please check UniformResourceLocator");
+  res.send("homepage this is ");
 });
 
 app.listen(PORT, () => console.log(`App started at PORT ${PORT}`));
