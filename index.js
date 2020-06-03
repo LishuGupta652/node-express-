@@ -12,25 +12,19 @@ require("./models/users");
 const route = require("./routes/route");
 
 try {
-  mongoose.connect(
-    MONGO_URL,
-    { useNewUrlParser: true },
-    { useUnifiedTopology: true }
-  );
+  mongoose.connect(MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
   mongoose.connection.on("connected", () => {
     console.log("connected");
   });
   mongoose.connection.on("error", () => {
-    console.log("error");
+    console.log("error while connection");
   });
-} catch {
-  console.log("error");
+} catch (err) {
+  console.log(err);
 }
-// const mongoose = require("mongoose");
-// mongoose.connect("mongodb://localhost/test", { useNewUrlParser: true });
-
-// const db = mongoose.connection;
-// db.on("error", console.log.bind(console, "connnection error"));
 
 app.use("/user", route);
 

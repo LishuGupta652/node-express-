@@ -5,31 +5,32 @@ const mongoose = require("mongoose");
 const User = mongoose.model("User");
 
 router.get("/", (req, res) => {
-  console.log("working started");
-  User.find().then((users) => {
-    console.log("working tiil now");
-    res.send(users);
-  });
+  User.find()
+    .then((users) => {
+      res.send(users);
+    })
+    .catch((err) => console.log(err));
 });
 
 router.post("/", (req, res) => {
+  console.log(req.body);
   const { name, email, password } = req.body;
   if (!email || !password || !name) {
     return res.status(400).json({ error: "Please add all the fields " });
   }
-  User.findOne({ email: email })
+  User.findOne({ email })
     .then((savedUser) => {
       if (savedUser) {
-        return res.sendStatus(400).json({ error: "Users already exists" });
+        return res.status(400).json({ error: "Users already exists" });
       }
       const user = new User({ name, email, password });
       user
         .save()
         .then((user) => {
-          res.json({ message: "Saved user sucessfully", data: user });
+          res.json({ message: "Saved user sucessfully" });
         })
         .catch((err) => {
-          console.log("error");
+          console.log("error while saving data");
         });
     })
     .then((err) => {
