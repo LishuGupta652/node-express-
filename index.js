@@ -8,8 +8,10 @@ app.use(express.urlencoded({ extended: true }));
 
 const mongoose = require("mongoose");
 require("./models/users");
+require("./models/post");
 
-const route = require("./routes/route");
+const userRoute = require("./routes/user");
+const postRoute = require("./routes/post");
 
 try {
   mongoose.connect(MONGO_URL, {
@@ -26,7 +28,8 @@ try {
   console.log(err);
 }
 
-app.use("/user", route);
+app.use("/user", userRoute);
+app.use("/post", postRoute);
 
 app.get("/", (req, res) => {
   res.send("homepage this is ");
